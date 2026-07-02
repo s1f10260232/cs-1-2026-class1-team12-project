@@ -1,58 +1,181 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    background-color: #f0f4f8;
+    color: #333333;
+    line-height: 1.6;
+}
+
+/* --- 全体のレイアウト（左右分割） --- */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* --- 左側：サイドバー --- */
 .sidebar {
-  width: 30%;
-  margin: 10px 0 10px 0;
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    padding: 30px 0;
+    flex-shrink: 0;
 }
 
-.sidebar ul {
-  margin: 0px;
-  padding: 0 10px 0 10px;
+.logo-area {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #34495e;
+    text-align: center;
 }
 
-.sidebar li {
-  display: block;
-  margin: 0px 0px 5px 0px;
-  padding: 5px 5px 5px 5px;
-  border-right: solid 2px #cccccc;
-  background-color: #eeeeee;
+.logo-img {
+    max-width: 100%;
+    border-radius: 8px;
 }
 
-.sidebar a {
-  color: #444444;
-  text-decoration: none;
-}
-h1 {
-  margin: 0;
-  padding: 10px 0 10px 0;
-  border-bottom: solid 2px #666666;
-  font-family: sans-serif;
-  font-size: 24px;
-  text-align: center;
-  color: #ffffff;
-  background-color: #333333;
+.side-nav ul {
+    list-style: none;
+    padding-top: 20px;
 }
 
-div.important {
-  margin: 10px 10px 10px 10px;
-  padding: 10px 10px 10px 10px;
-  border: solid 2px #ffff77;
-  background-color: #ffffaa;
+.side-nav li a {
+    display: block;
+    padding: 15px 25px 15px 20px; /* 左側のパディングを少し調整 */
+    color: #ecf0f1;
+    text-decoration: none;
+    /* 【修正】あらかじめ透明なボーダーを置いておくことで、ホバー時のガタつきを防ぐ */
+    border-left: 5px solid transparent;
+    transition: all 0.3s ease;
 }
 
-#container {
-  display: flex;
-  flex-direction: row;
+.side-nav li a:hover {
+    background-color: #34495e;
+    border-left-color: #1abc9c; /* 【修正】色だけを変える設定に */
+    padding-left: 25px; /* スムーズに文字が右にスライドする演出に */
 }
 
-.test-img1 {
-    width: 300px;
-    height: auto;
+/* --- 右側：メインコンテンツ --- */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #ffffff;
 }
 
-.test-img2 {
-    width: 60px;
-    height: auto;
+/* サイト名 */
+.site-header h1 {
+    font-size: 28px;
+    color: #2c3e50;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e6ed;
+    margin-bottom: 30px;
 }
 
-.home {
-    float: left;
+/* サイトの概要 */
+.site-overview {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 6px solid #1abc9c;
+    margin-bottom: 40px;
+}
+
+/* サブタイトル */
+.animal-section h2 {
+    font-size: 22px;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+/* --- 動物グリッド --- */
+.animal-grid {
+    display: grid;
+    /* 【修正】固定3列ではなく、画面幅に合わせて最小200px幅のカードを自動で並べる（レスポンシブ） */
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* 各動物のカードデザイン */
+.animal-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* 【修正】余白（padding）をここから排除し、中のaタグに移譲 */
+    padding: 0; 
+    text-align: center;
+    border: 1px solid #e0e6ed;
+    overflow: hidden; /* 画像やリンクの角丸をカードの角丸にフィットさせる */
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+/* 【追加】リンクをカード全体に広げ、色や下線をリセットする */
+.animal-card a {
+    display: block;
+    padding: 15px; /* ここで余白を確保することで、カード全体がクリック可能になる */
+    text-decoration: none;
+    color: inherit;
+}
+
+.animal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    border-color: #1abc9c; /* ホバー時に枠線もテーマカラーに変わるおまけ付き */
+}
+
+.animal-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.animal-card p {
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* --- 【追加】タブレット・スマホ用の画面切り替え --- */
+@media (max-width: 768px) {
+    .layout-wrapper {
+        flex-direction: column; /* 左右並びから縦並びに変更 */
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 20px 0 0 0;
+    }
+
+    .logo-area {
+        padding: 0 20px 15px;
+    }
+
+    .side-nav ul {
+        display: flex; /* ナビゲーションを横並びに */
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    .side-nav li a {
+        padding: 12px 15px;
+        border-left: none;
+        border-bottom: 3px solid transparent; /* スマホ時は下線のアニメーションに変更 */
+    }
+
+    .side-nav li a:hover {
+        background-color: transparent;
+        border-bottom-color: #1abc9c;
+        padding-left: 15px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
 }
